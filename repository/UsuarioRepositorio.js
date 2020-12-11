@@ -22,6 +22,16 @@ const criarUsuario = async (email, senha, apelido) => {
     return result.rows[0];
 }
 
+const pegaUsuarioPorId = async (id) => {
+    const query = `SELECT * FROM usuarios WHERE id = $1`;
+    const result = await database.query({
+        text: query,
+        values: [id]
+    });
+
+    return result.rows[0];
+}
+
 const pegaUsuarioPorEmail = async (email) => {
     const query = `SELECT * FROM usuarios WHERE email = $1`;
     const result = await database.query({
@@ -32,4 +42,34 @@ const pegaUsuarioPorEmail = async (email) => {
     return result.rows[0];
 }
 
-module.exports = { verificaExistenciaEmailOuApelido, criarUsuario, pegaUsuarioPorEmail };
+const pegarSaldo = async (id) => {
+    const query = `SELECT saldo FROM usuarios WHERE id = $1`;
+    const result = await database.query({
+        text: query,
+        values: [id]
+    });
+    
+    return result.rows[0];
+}
+
+const adicionarSaldo = async (value, id) => {
+    const query = `UPDATE usuarios SET saldo = saldo + $1 WHERE id = $2 RETURNING saldo`;
+    const result = await database.query({
+        text: query,
+        values: [value, id]
+    });
+    
+    return result.rows[0];
+}
+
+const removerSaldo = async (value, id) => {
+    const query = `UPDATE usuarios SET saldo = saldo - $1 WHERE id = $2 RETURNING saldo`;
+    const result = await database.query({
+        text: query,
+        values: [value, id]
+    });
+    
+    return result.rows[0];
+}
+
+module.exports = { verificaExistenciaEmailOuApelido, criarUsuario, pegaUsuarioPorEmail, pegarSaldo, adicionarSaldo, pegaUsuarioPorId, removerSaldo };

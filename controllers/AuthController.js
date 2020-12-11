@@ -15,7 +15,7 @@ async function login(req, res) {
 
     if (await bcrypt.compare(senha, usuario.senha)) {
         const token = jwt.sign({
-            id: usuario.id, apelido: usuario.apelido, email: usuario.email
+            id: usuario.id, apelido: usuario.apelido, email: usuario.email, saldo: usuario.saldo
         },
             process.env.JWT_SECRET
         );

@@ -7,6 +7,16 @@ const esquemas = {
         senha TEXT NOT NULL,
         apelido TEXT NOT NULL
     );`,
+    2: `ALTER TABLE usuarios ADD COLUMN saldo INT DEFAULT 0`,
+    3: `CREATE TABLE IF NOT EXISTS transacoes (
+        id SERIAL,
+        "usuarioOrigem" TEXT,
+        "usuarioDestino" TEXT,
+        valor INT,
+        tipo TEXT NOT NULL,
+        "dataCriacao" DATE
+    );`,
+    4: `ALTER TABLE transacoes ALTER COLUMN "dataCriacao" TYPE timestamp`,
 };
 
 const up = async (numero = null) => {

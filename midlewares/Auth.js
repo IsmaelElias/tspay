@@ -12,7 +12,7 @@ async function verificaToken (req, res, next) {
     }
 
     try {
-        res.locals.jwtPayload = await jwt.verify(tokenSeparado[2], process.env.JWT_SECRET)
+        res.locals.jwtPayload = await jwt.verify(tokenSeparado[1], "c25a7e79-2b34-4680-b6e3-39d013cc027d");
     } catch (error) {
         return res.status(401).send({ message: "Token inválido" });
     }
